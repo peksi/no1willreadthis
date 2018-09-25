@@ -17,6 +17,9 @@ twitterClient.get(
     for (let index = 0; index < tweets2.length; index++) {
       if (!tweets2[index].text.startsWith("RT")) {
         console.log(tweets2[index].text + "\n");
+        console.log(
+          "twitter.com/anyuser/status/" + tweets2[index].id_str + "\n"
+        );
       }
     }
   }
