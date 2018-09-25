@@ -1,16 +1,23 @@
 import Twitter from "twitter";
+import config from "./config.js";
 
 const twitterClient = new Twitter({
-  consumer_key: config.consumer_key,
-  consumer_secret: config.consumer_secret,
-  access_token_key: config.access_token_key,
-  access_token_secret: config.access_token_secret
+  consumer_key: config.TWITTER_CONSUMER_KEY,
+  consumer_secret: config.TWITTER_CONSUMER_SECRET,
+  access_token_key: config.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: config.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-client.get("search/tweets", { q: "node.js" }, function(
-  error,
-  tweets,
-  response
-) {
-  console.log(tweets);
-});
+twitterClient.get(
+  "search/tweets",
+  { q: '"no one will read this"', count: 100, result_type: "recent" },
+  function(error, tweets, response) {
+    const tweets2 = tweets.statuses;
+
+    for (let index = 0; index < tweets2.length; index++) {
+      if (!tweets2[index].text.startsWith("RT")) {
+        console.log(tweets2[index].text + "\n");
+      }
+    }
+  }
+);
