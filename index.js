@@ -1,4 +1,5 @@
 import Twitter from "twitter";
+import polarity from "polarity";
 import config from "./config.js";
 
 const twitterClient = new Twitter({
@@ -15,11 +16,16 @@ twitterClient.get(
     const tweets2 = tweets.statuses;
 
     for (let index = 0; index < tweets2.length; index++) {
-      if (!tweets2[index].text.startsWith("RT")) {
+      if (
+        !tweets2[index].text.startsWith("RT") &&
+        polarity(tweets2[index].text.split(" ")).polarity < -2
+      ) {
         console.log(tweets2[index].text + "\n");
         console.log(
           "twitter.com/anyuser/status/" + tweets2[index].id_str + "\n"
         );
+        console.log(polarity(tweets2[index].text.split(" ")));
+        console.log("----");
       }
     }
   }
